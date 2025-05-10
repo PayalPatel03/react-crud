@@ -1,12 +1,90 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+=> Overview
+The Movie Manager is a single-page React application that allows users to add, view, edit, and delete movie records. It uses Bootstrap for styling and provides a modal-based UI for adding/editing movies.
 
-Currently, two official plugins are available:
+=> Features
+Add new movies with Title, Director, and Year
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Edit existing movie entries via modal
 
-## Expanding the ESLint configuration
+Delete movies from the list
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Auto-focus on the title field when the modal opens
+
+Maintains a unique ID for each movie using Date.now()
+
+State Management
+js
+Copy
+Edit
+const [movie, setMovie] = useState({});
+const [movies, setMovies] = useState([]);
+const [editIdx, setEditIdx] = useState(-1);
+const [showModal, setShowModal] = useState(false);
+Explanation:
+movie: Current movie object (used for form inputs).
+
+movies: List of all added movies.
+
+editIdx: ID of the movie being edited (-1 means add mode).
+
+showModal: Controls modal visibility.
+
+=> Event Handlers
+handleChange(e)
+Updates movie object as user types into form fields.
+
+handleSubmit(e)
+Prevents default form submission
+
+If in add mode, appends movie to the list
+
+If in edit mode, updates the selected movie
+
+Resets the form and closes the modal
+
+handleDelete(id)
+Removes a movie from the list by filtering it out.
+
+handleEdit(id)
+Finds the movie by ID
+
+Populates the modal with selected movie details
+
+Opens modal in edit mode
+
+=> Modal Handling
+The modal is conditionally rendered with showModal && (...)
+
+Uses Bootstrap classes for a visually appealing UI
+
+Includes close and submit buttons
+
+Auto-focus is applied to the "Title" field using useEffect and focusRef
+
+=> Controlled Components
+All form inputs are controlled using state:
+
+js
+Copy
+Edit
+value={movie.title || ""}
+onChange={handleChange}
+This ensures input values are always synced with the component state.
+
+=> UI Components
+Button: To add new movies
+
+Table: To display list of movies
+
+Modal: For both adding and editing movie entries
+
+=> Improvements to Consider
+Form validation before submission
+
+LocalStorage integration to persist data
+
+Sorting/filtering movies
+
+Pagination for large lists
