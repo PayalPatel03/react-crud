@@ -1,90 +1,54 @@
 # React + Vite
-
+=> Personal Library Manager – Documentation
 => Overview
-The Movie Manager is a single-page React application that allows users to add, view, edit, and delete movie records. It uses Bootstrap for styling and provides a modal-based UI for adding/editing movies.
+The Personal Library Manager is a single-page CRUD (Create, Read, Update, Delete) application built with React. It allows users to manage their personal collection of books. The application stores book data in the browser's localStorage to ensure data persistence between sessions.
 
-=> Features
-Add new movies with Title, Director, and Year
+=> Technologies Used
+React: Front-end JavaScript library.
 
-Edit existing movie entries via modal
+Bootstrap (optional): For responsive UI.
 
-Delete movies from the list
+LocalStorage: To persist data without a backend.
 
-Auto-focus on the title field when the modal opens
+=> Components & Functionality
+1. useState and useEffect
+useState: Manages book form (book), book list (books), and editing state (editId).
 
-Maintains a unique ID for each movie using Date.now()
+useEffect: On initial load, fetches books from localStorage.
 
-State Management
-js
-Copy
-Edit
-const [movie, setMovie] = useState({});
-const [movies, setMovies] = useState([]);
-const [editIdx, setEditIdx] = useState(-1);
-const [showModal, setShowModal] = useState(false);
-Explanation:
-movie: Current movie object (used for form inputs).
+2. Form Handling
+Form fields:
 
-movies: List of all added movies.
+Title (text input)
 
-editIdx: ID of the movie being edited (-1 means add mode).
+Author (text input)
 
-showModal: Controls modal visibility.
+Genre (dropdown)
 
-=> Event Handlers
-handleChange(e)
-Updates movie object as user types into form fields.
+Status (radio buttons)
 
-handleSubmit(e)
-Prevents default form submission
+Uses handleChange() to dynamically update book state.
 
-If in add mode, appends movie to the list
+handleSubmit() manages both add and update functionality.
 
-If in edit mode, updates the selected movie
+3. Add Book
+When editId === -1, a new book is added.
 
-Resets the form and closes the modal
+Stored in both state and localStorage.
 
-handleDelete(id)
-Removes a movie from the list by filtering it out.
+4. Edit Book
+Sets the selected book in the form using handleEdit().
 
-handleEdit(id)
-Finds the movie by ID
+Updates editId and changes button text to "Update Book".
 
-Populates the modal with selected movie details
+5. Update Book
+Replaces the matching book by id using .map().
 
-Opens modal in edit mode
+Updates both the state and localStorage.
 
-=> Modal Handling
-The modal is conditionally rendered with showModal && (...)
+6. Delete Book
+Removes book by ID using .filter().
 
-Uses Bootstrap classes for a visually appealing UI
+Updates both the state and localStorage.
 
-Includes close and submit buttons
 
-Auto-focus is applied to the "Title" field using useEffect and focusRef
-
-=> Controlled Components
-All form inputs are controlled using state:
-
-js
-Copy
-Edit
-value={movie.title || ""}
-onChange={handleChange}
-This ensures input values are always synced with the component state.
-
-=> UI Components
-Button: To add new movies
-
-Table: To display list of movies
-
-Modal: For both adding and editing movie entries
-
-=> Improvements to Consider
-Form validation before submission
-
-LocalStorage integration to persist data
-
-Sorting/filtering movies
-
-Pagination for large lists
